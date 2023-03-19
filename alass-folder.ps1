@@ -93,7 +93,7 @@ function Extract-Subs([parameter(Position=0, Mandatory=$true)][FileInfo[]]$refer
 	}
 
 	$currentTime = Get-Date -Format "yyyy_MM_dd_HH_mm_ss_fff"
-	$newFolderName = "Extracted_Subs_${currentTime}"
+	$newFolderName = "Extracted_Reference_Subs_${currentTime}"
 	$extractedSubsDirectoryName = [Path]::Combine($referenceFolder, $newFolderName)
 
 	Create-Directory-If-Does-Not-Exist $extractedSubsDirectoryName
