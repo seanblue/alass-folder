@@ -13,6 +13,9 @@ param (
 	[string]
 	$outputFolder,
 
+	[string]
+	$outputSubLanguage = "",
+
 	[string[]]
 	$alassArgs,
 
@@ -34,6 +37,13 @@ $mkvextractCommand = "mkvextract"
 
 if (-not $extractSubsExtension.StartsWith('.')) {
 	$extractSubsExtension = ".${extractSubsExtension}"
+}
+
+if ([string]::IsNullOrWhiteSpace($outputSubLanguage)) {
+	$outputSubLanguage = ""
+}
+elseif (-not $outputSubLanguage.StartsWith('.')) {
+	$outputSubLanguage = ".${outputSubLanguage}"
 }
 
 function Exit-If-Command-Does-Not-Exist($commandName) {
@@ -129,7 +139,7 @@ for ($i=0; $i -lt $referenceFiles.Length; $i++) {
 	$incorrectSubFileFullName = $incorrectSubFiles[$i].FullName
 	$incorrectSubFileExtension = [Path]::GetExtension($incorrectSubFileFullName)
 
-	$outputFileFullName = Get-Full-Path -directory $outputFolder -fileName "${referenceFileName}${incorrectSubFileExtension}"
+	$outputFileFullName = Get-Full-Path -directory $outputFolder -fileName "${referenceFileName}${outputSubLanguage}${incorrectSubFileExtension}"
 
 	$alassCommandArgs = @()
 
