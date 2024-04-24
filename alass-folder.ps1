@@ -76,11 +76,11 @@ if (-not (Test-Path -LiteralPath $incorrectSubFolder)) {
 	exit
 }
 
-$referenceFiles = Get-ChildItem -File -LiteralPath $referenceFolder
-$incorrectSubFiles = Get-ChildItem -File -LiteralPath $incorrectSubFolder
+$referenceFiles = @(Get-ChildItem -File -LiteralPath $referenceFolder)
+$incorrectSubFiles = @(Get-ChildItem -File -LiteralPath $incorrectSubFolder)
 
 if ($referenceFiles.Length -ne $incorrectSubFiles.Length) {
-	write-host "Number of reference files and incorrect subtitle files must be the same"
+	write-host "Number of reference files and incorrect subtitle files must be the same, but were $($referenceFiles.Length) and $($incorrectSubFiles.Length)"
 	exit
 }
 
@@ -125,7 +125,7 @@ function Extract-Subs([parameter(Position=0, Mandatory=$true)][FileInfo[]]$refer
 $extractedSubsReferenceFolder = $null
 if ($extractSubs) {
 	$extractedSubsReferenceFolder = Extract-Subs $referenceFiles
-	$referenceFiles = Get-ChildItem -File -LiteralPath $extractedSubsReferenceFolder
+	$referenceFiles = @(Get-ChildItem -File -LiteralPath $extractedSubsReferenceFolder)
 }
 
 Create-Directory-If-Does-Not-Exist $outputFolder
